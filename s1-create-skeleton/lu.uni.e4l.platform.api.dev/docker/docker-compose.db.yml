@@ -6,7 +6,7 @@ services:
     image: mariadb:10.4.7
     container_name: e4l-db
     volumes:
-      - /home/riccardo/e4l-mysql:/var/lib/mysql
+      - "${HOME}/e4l-mysql:/var/lib/mysql"
       #- ${DUMP_DIR}:${DUMP_DIR}
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
