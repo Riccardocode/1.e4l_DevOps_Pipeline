@@ -17,6 +17,6 @@ sudo docker-compose -f ./docker/docker-compose.backend.pre-prod.yml up -d
 # Step 3: Start the Frontend Container
 echo "Starting the frontend container..."
 cd "$FRONTEND_PATH" || exit
-sudo docker-compose -f ./e4l.frontend.docker/docker-compose.frontend.pre-prod.yml up -d
+sudo HOME="$HOME" docker-compose -f ./e4l.frontend.docker/docker-compose.frontend.pre-prod.yml up -d
 
 echo "All containers have been started."

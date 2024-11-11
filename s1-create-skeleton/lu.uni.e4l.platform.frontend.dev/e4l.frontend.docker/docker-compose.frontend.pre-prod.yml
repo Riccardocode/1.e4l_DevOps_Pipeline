@@ -8,7 +8,7 @@ services:
     ports:
       - 8884:80
     volumes:
-      - /home/riccardo/e4l-news:/usr/share/nginx/news
+      - "${HOME}/e4l-news:/usr/share/nginx/news"
     environment:
       - PUBLIC_PATH=
       - API_URL=/e4lapi
