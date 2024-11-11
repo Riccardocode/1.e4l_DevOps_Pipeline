@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Define paths to the scripts
-BACKEND_SCRIPT="/home/riccardo/1.e4l_DevOps_Pipeline/Scripts/automate_backend_build.sh"
-FRONTEND_SCRIPT="/home/riccardo/1.e4l_DevOps_Pipeline/Scripts/automate_frontend_build.sh"
-DATABASE_SCRIPT="/home/riccardo/1.e4l_DevOps_Pipeline/Scripts/prepare_database.sh"
+BACKEND_SCRIPT="$HOME/1.e4l_DevOps_Pipeline/Scripts/automate_backend_build.sh"
+FRONTEND_SCRIPT="$HOME/1.e4l_DevOps_Pipeline/Scripts/automate_frontend_build.sh"
+DATABASE_SCRIPT="$HOME/1.e4l_DevOps_Pipeline/Scripts/prepare_database.sh"
 
 # Step 1: Run the backend build script
 echo "Running backend build script..."
