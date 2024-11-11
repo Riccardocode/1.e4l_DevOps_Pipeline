@@ -7,7 +7,7 @@ FRONTEND_PATH="$HOME/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platfor
 # Step 1: Start the Database Container
 echo "Starting the database container..."
 cd "$BACKEND_PATH" || exit
-sudo docker-compose -f ./docker/docker-compose.db.yml up -d
+sudo HOME="$HOME" docker-compose -f ./docker/docker-compose.db.yml up -d
 
 # Step 2: Start the Backend Container
 echo "Starting the backend container..."
