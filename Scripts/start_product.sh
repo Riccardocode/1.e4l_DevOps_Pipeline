@@ -8,15 +8,17 @@ FRONTEND_PATH="$HOME/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platfor
 if [ ! -d "${HOME}/e4l-mysql" ]; then
     echo "Creating ${HOME}/e4l-mysql directory..."
     sudo mkdir -p "${HOME}/e4l-mysql"
-    sudo chmod -R 777 "${HOME}/e4l-mysql"
+    
 fi
+sudo chmod -R 777 "${HOME}/e4l-mysql"
 
 # Create the e4l-news directory if it doesn't exist and set permissions
 if [ ! -d "${HOME}/e4l-news" ]; then
     echo "Creating ${HOME}/e4l-news directory..."
     sudo mkdir -p "${HOME}/e4l-news"
-    sudo chmod -R 777 "${HOME}/e4l-news"
+    
 fi
+sudo chmod -R 777 "${HOME}/e4l-news"
 
 # Step 1: Start the Database Container
 echo "Starting the database container..."
