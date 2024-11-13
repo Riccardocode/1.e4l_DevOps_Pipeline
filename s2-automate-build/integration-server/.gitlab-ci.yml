@@ -1,0 +1,31 @@
+image: maven:latest
+
+stages:
+  - build_backend
+  # - build_frontend
+  # - test
+  # - run
+
+cache:
+  paths:
+    - target/
+
+build_backend:
+  stage: build_backend
+  script:
+    - chmod +x /home/vagrant/automate_backend_build.sh
+    - /home/vagrant/automate_backend_build.sh
+  privileged: true
+
+test_app:
+  stage: test
+  script:
+    - mvn test
+  privileged: true
+
+run_app:
+  stage: run
+  script:
+    - mvn package
+    - mvn exec:java -Dexec.mainClass="com.jcg.maven.App"
+  privileged: true

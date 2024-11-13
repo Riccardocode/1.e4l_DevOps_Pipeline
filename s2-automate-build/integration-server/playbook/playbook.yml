@@ -1,0 +1,48 @@
+# vim: ts=2
+---
+- hosts: all
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+
+  vars:
+    vHome: /home/vagrant
+
+  tasks:
+    - include_role:
+        name: gitlab
+
+    - include_role:
+        name: docker
+
+    # - name: Transfer finalProduct to automate the process
+    #   copy: src=/home/riccardo/1.e4l_DevOps_Pipeline/s1-create-skeleton dest=/home/vagrant/
+
+    - name: Transfer the provision scripts to automate the process
+      copy: src=provision_scripts dest=/home/vagrant/ mode=0777
+
+    - name: Run the gitlab configuration script.
+      command: sh /home/vagrant/provision_scripts/configure-gitlab.sh
+
+    - name: Pause for 5 seconds
+      pause:
+        seconds: 5
+
+    - name: Run the docker configuration script.
+      command: sh /home/vagrant/provision_scripts/configure-docker.sh
+
+    - name: Pause for 5 seconds
+      pause:
+        seconds: 5
+
+    # - name: Run the repository setup script.
+    #   command: /home/vagrant/provision_scripts/setup-repository.sh
+
+    - name: Pause for 5 seconds
+      pause:
+        seconds: 5
+
+    # - name: Run the gitlab runner setup script.
+    #   command: sh /home/vagrant/provision_scripts/setup-gitlab-runner.sh
+    #### End Exercise 2.c
+
