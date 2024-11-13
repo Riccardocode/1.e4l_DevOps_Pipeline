@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant_data":{"guestpath":"/vagrant_data","hostpath":"/home/riccardo/1.e4l_DevOps_Pipeline/data","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/riccardo/1.e4l_DevOps_Pipeline/s2-automate-build/integration-server","disabled":false,"__vagrantfile":true}}}
