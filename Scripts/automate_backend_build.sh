@@ -49,7 +49,7 @@ sudo docker exec -it $CONTAINER_NAME bash -c "
     cd /app &&
     gradle wrapper &&
     chmod +x gradlew &&
-    ./gradlew clean build bootJar
+    ./gradlew clean build bootJar -Dorg.gradle.jvmargs='-Xmx2g -Xms512m'
 " || { echo "Error during JAR file build. Exiting."; exit 1; }
 
 # Ensure the host build directory exists with correct permissions
