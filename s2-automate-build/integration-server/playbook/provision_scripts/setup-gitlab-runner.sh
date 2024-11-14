@@ -20,7 +20,17 @@ sudo gitlab-runner register \
   --url "http://192.168.56.9/gitlab/" \
   --registration-token "$token" \
   --description "docker-runner" \
-  --tag-list "docker" \
+  --tag-list "e4l-backend" \
+  --executor "docker" \
+  --docker-image "alpine:latest" \
+  --run-untagged="true"
+
+sudo gitlab-runner register \
+  --non-interactive \
+  --url "http://192.168.56.9/gitlab/" \
+  --registration-token "$token" \
+  --description "docker-runner-frontend" \
+  --tag-list "e4l-frontend" \
   --executor "docker" \
   --docker-image "alpine:latest" \
   --run-untagged="true"
