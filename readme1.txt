@@ -18,3 +18,15 @@ Open a new terminal
 cd ~/1.e4l_DevOps_Pipeline/s2-automate-build/integration-server
 vagrant ssh
 ~/provision_scripts/setup-gitlab-runner.sh
+
+Create directory inside the integration VM
+mkdir /home/vagrant/artefact-repository
+
+Change rights to the directory
+cd /home/vagrant
+chmod 777 artefact-repository/
+
+
+Start The Stage Virtual machine
+cd ~/s3-automate-deploy/stage-vm
+vagrant up

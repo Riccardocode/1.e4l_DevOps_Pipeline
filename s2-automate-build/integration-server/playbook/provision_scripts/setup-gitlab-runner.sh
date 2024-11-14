@@ -8,6 +8,9 @@ sudo apt-get install -y gitlab-runner
 # If not on the GitLab server, copy the token from GitLab UI: Settings > CI / CD > Runners
 token=$(sudo gitlab-rails runner -e production "puts Gitlab::CurrentSettings.current_application_settings.runners_registration_token")
 
+# Save the token to a file in /vagrant_data
+echo "$token" > /vagrant_data/gitlab_runner_token.txt
+
 # Check if token retrieval was successful
 if [ -z "$token" ]; then
   echo "Error: Failed to retrieve the runner registration token. Please ensure the token is set correctly."
@@ -19,7 +22,7 @@ sudo gitlab-runner register \
   --non-interactive \
   --url "http://192.168.56.9/gitlab/" \
   --registration-token "$token" \
-  --description "docker-runner" \
+  --description "docker-runner-backend" \
   --tag-list "e4l-backend" \
   --executor "docker" \
   --docker-image "alpine:latest" \
@@ -34,25 +37,7 @@ sudo gitlab-runner register \
   --executor "docker" \
   --docker-image "alpine:latest" \
   --run-untagged="true"
-# Register the GitLab Runner for backend with shell executor
-sudo gitlab-runner register \
-  --non-interactive \
-  --url "http://192.168.56.9/gitlab/" \
-  --registration-token "$token" \
-  --description "[stage-backend] shell" \
-  --tag-list "stage-vm-backend-shell" \
-  --executor "shell" \
-  --run-untagged="true"
 
-# Register the GitLab Runner for frontend with shell executor
-sudo gitlab-runner register \
-  --non-interactive \
-  --url "http://192.168.56.9/gitlab/" \
-  --registration-token "$token" \
-  --description "[stage-frontend] shell" \
-  --tag-list "stage-vm-frontend-shell" \
-  --executor "shell" \
-  --run-untagged="true"
 
 # Update the privileged setting in config.toml
 CONFIG_FILE="/etc/gitlab-runner/config.toml"
