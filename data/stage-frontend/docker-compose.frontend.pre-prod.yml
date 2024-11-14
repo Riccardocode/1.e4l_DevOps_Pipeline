@@ -1,0 +1,16 @@
+version: "3.5"
+
+services:
+  e4l-frontend-preprod:
+    restart: always
+    image: lu.uni.e4l.platform.frontend.dev:rc
+    container_name: e4l-frontend-preprod
+    ports:
+      - 8884:80
+    volumes:
+      - "${HOME}/e4l-news:/usr/share/nginx/news"
+    environment:
+      - PUBLIC_PATH=
+      - API_URL=/e4lapi
+      - TZ=Europe/Luxembourg
+      
