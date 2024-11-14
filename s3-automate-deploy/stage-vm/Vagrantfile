@@ -36,10 +36,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      	sudo apt-get update
      	sudo apt-get install --yes python
    	SHELL
+
+  # Create directories and set permissions
+  config.vm.provision "shell", inline: <<-SHELL
+    cp -r /vagrant_data/stage-frontend /home/vagrant/
+    # Copy the stage-backend directory from /vagrant_data to /home/vagrant
+    cp -r /vagrant_data/stage-backend /home/vagrant/
+    chmod 777 /home/vagrant/stage-frontend
+    chmod 777 /home/vagrant/stage-backend
+  SHELL
+  
   config.vm.provision "shell", inline: <<-SHELL
       chmod +x /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
       /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
    SHELL
+  
+  
    
   
 end

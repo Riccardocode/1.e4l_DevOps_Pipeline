@@ -2,7 +2,7 @@ before_script:
   - export CURRENT_DATETIME=`date +"%Y%m%d-%H%M%S"`
 stages:
   - build
-  - deploy
+  - deploy-stage
 
 
 services:
@@ -30,8 +30,8 @@ build:
     expire_in: 1 week
 
 
-stage:
-  stage: deploy
+deploy-stage:
+  stage: deploy-stage
   tags:
     - stage-vm-frontend-shell
   image: ubuntu:latest
@@ -39,7 +39,7 @@ stage:
     # Switch to root user to ensure permissions
     # - apt-get update && apt-get install -y openssh-client  # Install SSH client for scp
     # Create a temporary directory within the CI workspace
-    - cp -r e4l.frontend.docker/web/* /home/vagrant/stage
+    - cp -r e4l.frontend.docker/web/dist/* /home/vagrant/stage-frontend/web/dist
     
   dependencies:
     - build  # Ensures artifacts from the build stage are available
