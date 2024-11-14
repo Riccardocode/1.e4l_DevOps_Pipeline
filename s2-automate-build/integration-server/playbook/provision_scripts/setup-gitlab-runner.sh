@@ -34,6 +34,25 @@ sudo gitlab-runner register \
   --executor "docker" \
   --docker-image "alpine:latest" \
   --run-untagged="true"
+# Register the GitLab Runner for backend with shell executor
+sudo gitlab-runner register \
+  --non-interactive \
+  --url "http://192.168.56.9/gitlab/" \
+  --registration-token "$token" \
+  --description "[stage-backend] shell" \
+  --tag-list "stage-vm-backend-shell" \
+  --executor "shell" \
+  --run-untagged="true"
+
+# Register the GitLab Runner for frontend with shell executor
+sudo gitlab-runner register \
+  --non-interactive \
+  --url "http://192.168.56.9/gitlab/" \
+  --registration-token "$token" \
+  --description "[stage-frontend] shell" \
+  --tag-list "stage-vm-frontend-shell" \
+  --executor "shell" \
+  --run-untagged="true"
 
 # Update the privileged setting in config.toml
 CONFIG_FILE="/etc/gitlab-runner/config.toml"
