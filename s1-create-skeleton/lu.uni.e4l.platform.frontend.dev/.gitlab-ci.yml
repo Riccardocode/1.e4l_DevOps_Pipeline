@@ -1,6 +1,5 @@
 before_script:
   - export CURRENT_DATETIME=`date +"%Y%m%d-%H%M%S"`
-
 stages:
   - build
   - deploy
@@ -16,7 +15,10 @@ build:
   image: node:15
   stage: build
   tags: [e4l-frontend]
-  script: npm install && npm run build
+  script: 
+  - npm install
+  - npm run build
+  - chmod -R 777 e4l.frontend.docker/web/dist
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -28,16 +30,17 @@ build:
     expire_in: 1 week
 
 
-deploy:
+stage:
   stage: deploy
   tags:
     - stage-vm-frontend-shell
-  image: ubuntu:latest  # Use an image with ssh/scp installed
+  image: ubuntu:latest
   script:
-    - apt-get update && apt-get install -y openssh-client  # Install SSH client for scp
-    - mkdir -p /home/vagrant/artefact-repository  # Local directory to hold the artifacts temporarily
-    - cp e4l.frontend.docker/web/dist/* /home/vagrant/artefact-repository  # Copy artifacts locally
-    # Use scp to transfer the artifacts to the remote VM
-    - scp -o StrictHostKeyChecking=no -r /home/vagrant/artefact-repository/* vagrant@192.168.56.7:/desired/remote/path
+    # Switch to root user to ensure permissions
+    # - apt-get update && apt-get install -y openssh-client  # Install SSH client for scp
+    # Create a temporary directory within the CI workspace
+    - cp -r e4l.frontend.docker/web/* /home/vagrant/stage
+    
   dependencies:
     - build  # Ensures artifacts from the build stage are available
+

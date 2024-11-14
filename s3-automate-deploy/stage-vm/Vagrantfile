@@ -17,6 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: "192.168.56.7"
 
   config.vm.synced_folder "../../data", "/vagrant_data"
+  config.vm.synced_folder "./stage-scripts", "/home/vagrant/scripts"
 
   config.vm.provider :virtualbox do |vb|
    
@@ -35,6 +36,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      	sudo apt-get update
      	sudo apt-get install --yes python
    	SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+      chmod +x /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
+      /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
+   SHELL
    
   
 end
