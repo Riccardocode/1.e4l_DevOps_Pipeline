@@ -9,11 +9,35 @@ variables:
 
 stages:
   - build
+  - test
 
 build:
+  rules:
+  - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image: gradle:8.3
   stage: build
-  before_script:
-    - apk add --no-cache maven  # Install Maven
-  script:
-    - chmod +x ./automate_backend_build.sh
-    - ./automate_backend_build.sh
+  tags: [e4l-backend]
+  script: gradle --build-cache clean build bootJar
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+    - build
+    - .gradle
+
+test:
+  rules:
+  - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image: gradle:8.3
+  stage: test
+  script: gradle clean check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+    - build
+    - .gradle
+
+
