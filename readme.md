@@ -35,12 +35,13 @@ this will start the virtual machine for the integration Environment
 
 ### 4. Setup the repository for backend:
 ```bash 
-~/1.e4l_DevOps_Pipeline/s2-automate-build/integration-server/playbook/provision_scripts/setup-repository-backend.sh
+~/1.e4l_DevOps_Pipeline/Scripts/setup-repository-backend.sh
 ```
+
 
 ### 5. Setup the repository for frontend:
 ```bash
-~/1.e4l_DevOps_Pipeline/s2-automate-build/integration-server/playbook/provision_scripts/setup-repository-frontend.sh
+~/1.e4l_DevOps_Pipeline/Scripts/setup-repository-frontend.sh
 ```
 
 ### 6. Setup the runner inside the CI virtual machine
