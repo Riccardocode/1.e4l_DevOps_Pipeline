@@ -1,57 +1,101 @@
 # -*- mode: ruby -*-
-#
 # vi: set ft=ruby :
 # vim: ts=2
 
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
- 
   config.vm.box = "ubuntu/xenial64"
   config.vm.hostname = "stage-vm"
-  config.vm.box_download_insecure = false 
+  config.vm.box_download_insecure = false
   
-  ENV['LC_ALL']="en_US.UTF-8"
+  ENV['LC_ALL'] = "en_US.UTF-8"
   
-
   config.vm.network :private_network, ip: "192.168.56.7"
-
+  
   config.vm.synced_folder "../../data", "/vagrant_data"
   config.vm.synced_folder "./stage-scripts", "/home/vagrant/scripts"
-
+  
   config.vm.provider :virtualbox do |vb|
-   
     vb.customize [
       'modifyvm', :id,
       '--natdnshostresolver1', 'on',
       '--memory', '4096',
       '--cpus', '1'
     ]
-    
   end
+  
   config.vm.boot_timeout = 300  # 5 minutes
   config.vm.graceful_halt_timeout = 60
   
+  # Install Docker and Docker Compose
   config.vm.provision "shell", inline: <<-SHELL
-     	sudo apt-get update
-     	sudo apt-get install --yes python
-   	SHELL
+    sudo apt-get update
+    sudo apt-get install -y python tar apt-transport-https ca-certificates curl software-properties-common
 
-  # Create directories and set permissions
-  config.vm.provision "shell", inline: <<-SHELL
-    cp -r /vagrant_data/stage-frontend /home/vagrant/
-    # Copy the stage-backend directory from /vagrant_data to /home/vagrant
-    cp -r /vagrant_data/stage-backend /home/vagrant/
-    chmod 777 /home/vagrant/stage-frontend
-    chmod 777 /home/vagrant/stage-backend
+    # Install Docker
+    echo "Installing Docker and dependencies from local .deb packages..."
+    sudo dpkg -i /vagrant_data/installations/containerd.io_1.3.7-1_amd64.deb
+    sudo dpkg -i /vagrant_data/installations/docker-ce-cli_19.03.15~3-0~ubuntu-xenial_amd64.deb
+    sudo dpkg -i /vagrant_data/installations/docker-ce_19.03.15~3-0~ubuntu-xenial_amd64.deb
+    sudo apt-get install -f -y  # Fix any remaining dependency issues
+    sudo systemctl enable docker
+    sudo systemctl start docker
+
+    # Install Docker Compose
+    echo "Installing Docker Compose..."
+    sudo cp /vagrant_data/installations/docker-compose-1.23.2 /usr/bin/docker-compose
+    sudo chmod +x /usr/bin/docker-compose
+
+    # Verify Installations
+    docker --version
+    docker-compose --version
   SHELL
   
+  # Copy and set permissions for frontend and backend
   config.vm.provision "shell", inline: <<-SHELL
-      chmod +x /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
-      /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
-   SHELL
+    cp -r /vagrant_data/stage-frontend /home/vagrant/
+    cp -r /vagrant_data/stage-backend /home/vagrant/
+    chmod -R 777 /home/vagrant/stage-frontend
+    chmod -R 777 /home/vagrant/stage-backend
+    # chmod 777 /home/vagrant/stage-backend/build
+    # chmod 777 /home/vagrant/stage-backend/build/libs
+  SHELL
   
+  # # Unregister GitLab Runners before halt
+  # config.trigger.before :halt do |trigger|
+  #   trigger.name = "Unregister GitLab Runners"
+  #   trigger.run = <<-SHELL
+  #     echo "Unregistering GitLab Runners..."
+  #     sudo gitlab-runner unregister --name "[stage-frontend] shell" || echo "Runner '[stage-frontend]' not found or already unregistered"
+  #     sudo gitlab-runner unregister --name "[stage-backend] shell" || echo "Runner '[stage-backend]' not found or already unregistered"
+  #   SHELL
+  # end
+  # Unregister GitLab Runners before halt
+  # config.trigger.before :halt do |trigger|
+  #   trigger.name = "Unregister GitLab Runners"
+  #   trigger.run = <<-SHELL
+  #     echo "Unregistering GitLab Runners..."
+  #     sudo gitlab-runner unregister --name "[stage-frontend] shell" || echo "Runner '[stage-frontend]' not found or already unregistered"
+  #     sudo gitlab-runner unregister --name "[stage-backend] shell" || echo "Runner '[stage-backend]' not found or already unregistered"
+  #   SHELL
+  # end
+  # config.trigger.before :halt do |trigger|
+  #   trigger.name = "Unregister GitLab Runners"
+  #   trigger.info = "Unregistering GitLab Runners before halting the VM..."
+  #   trigger.run = {
+  #     inline: <<-SHELL
+  #       sudo gitlab-runner unregister --name "[stage-frontend] shell" || echo "Runner '[stage-frontend]' not found or already unregistered"
+  #       sudo gitlab-runner unregister --name "[stage-backend] shell" || echo "Runner '[stage-backend]' not found or already unregistered"
+  #     SHELL
+  #   }
+  # end
   
-   
+
   
+  # Run the GitLab Runner setup script
+  config.vm.provision "shell", inline: <<-SHELL
+    chmod +x /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
+    /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
+  SHELL
 end
