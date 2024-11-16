@@ -7,6 +7,8 @@
 /data/logs
 /data/remove-all-gitlab-runners.sh
 /Scripts/installation-scripts
+/usefullCommands.md
+
 
 #installation files
 /data/installations/gitlab-runner_17.5.3-1_amd64.deb
