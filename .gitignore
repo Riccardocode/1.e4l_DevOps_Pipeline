@@ -2,3 +2,17 @@
 /s1-create-skeleton/lu.uni.e4l.platform.frontend.dev/e4l.frontend.docker/web/dist
 /Scripts/installations/commands.sh
 /s2-automate-build/integration-server/.vagrant
+/versions.txt
+/s2-automate-build/integration-server/playbook/provision_scripts/remove-all-gitlab-runners.sh
+/data/logs
+/data/remove-all-gitlab-runners.sh
+/Scripts/installation-scripts
+
+#installation files
+/data/installations/gitlab-runner_17.5.3-1_amd64.deb
+/data/installations/docker-24.0.5.tgz
+/data/installations/docker-compose-v2.20.3
+/data/installations/docker-ce_19.03.15~3-0~ubuntu-xenial_amd64.deb
+/data/installations/containerd.io_1.3.7-1_amd64.deb
+/data/installations/docker-ce-cli_19.03.15~3-0~ubuntu-xenial_amd64.deb
+/data/installations/docker-compose-1.23.2

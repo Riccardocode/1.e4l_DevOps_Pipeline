@@ -1,2 +1,0 @@
-sudo apt-remove podman
-sudo snap install docker 
