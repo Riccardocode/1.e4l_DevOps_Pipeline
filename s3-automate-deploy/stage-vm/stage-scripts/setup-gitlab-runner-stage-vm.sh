@@ -46,7 +46,7 @@ sudo gitlab-runner register \
   --non-interactive \
   --url "http://192.168.56.9/gitlab/" \
   --registration-token "$token" \
-  --description "[stage-backend] shell" \
+  --description "stage-backend-shell" \
   --tag-list "stage-vm-backend-shell" \
   --executor "shell" \
   --run-untagged="true"
@@ -56,7 +56,7 @@ sudo gitlab-runner register \
   --non-interactive \
   --url "http://192.168.56.9/gitlab/" \
   --registration-token "$token" \
-  --description "[stage-frontend] shell" \
+  --description "stage-frontend-shell" \
   --tag-list "stage-vm-frontend-shell" \
   --executor "shell" \
   --run-untagged="true"
