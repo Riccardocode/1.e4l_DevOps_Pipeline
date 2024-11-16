@@ -18,6 +18,11 @@ This repository contains the DevOps pipeline setup and related configurations fo
 cd ~/
 git clone https://github.com/Riccardocode/1.e4l_DevOps_Pipeline
 ```
+Download gitlab-runner and make it available locally for the virtual machines
+```bash
+curl -L --output ~/1.e4l_DevOps_Pipeline/data/installations/gitlab-runner_17.5.3-1_amd64.deb https://gitlab-runner-downloads.s3.amazonaws.com/latest/deb/gitlab-runner_amd64.deb
+```
+
 ### 2. Check if repository is present in your ~/ directory
 ```bash
 ls

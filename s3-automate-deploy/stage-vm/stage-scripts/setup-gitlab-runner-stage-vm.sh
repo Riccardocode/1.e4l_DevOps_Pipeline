@@ -1,8 +1,24 @@
-#!/bin/bash
+#!/bin/bash 
 
-# Install GitLab Runner
-curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
-sudo apt-get install -y gitlab-runner
+# Define paths and package name
+INSTALLATION_DIR="/vagrant_data/installations"
+PACKAGE_NAME="gitlab-runner_17.5.3-1_amd64.deb" 
+PACKAGE_PATH="$INSTALLATION_DIR/$PACKAGE_NAME"
+
+# # Previous Install GitLab Runner from internet
+# curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+# sudo apt-get install -y gitlab-runner
+
+# Check if the package exists in the shared folder
+if [ ! -f "$PACKAGE_PATH" ]; then
+  echo "Error: GitLab Runner package not found at $PACKAGE_PATH."
+  exit 1
+fi
+
+# Install GitLab Runner from the pre-downloaded package
+sudo dpkg -i "$PACKAGE_PATH"
+# Resolve any missing dependencies
+sudo apt-get install -f -y
 
 # Retrieve the runner registration token (only if this is run on the GitLab server)
 # If not on the GitLab server, copy the token from GitLab UI: Settings > CI / CD > Runners
