@@ -7,12 +7,6 @@ FRONTEND_PATH="/home/vagrant/deploy-frontend"
 IMAGE_NAME="lu.uni.e4l.platform.frontend.dev:rc"
 CONTAINER_NAME="e4l-frontend-preprod"
 
-# Create the e4l-news directory if it doesn't exist and set permissions
-if [ ! -d "${HOME}/e4l-news" ]; then
-    echo "Creating ${HOME}/e4l-news directory..."
-    sudo mkdir -p "${HOME}/e4l-news"
-fi
-sudo chmod -R 777 "${HOME}/e4l-news"
 
 # Navigate to the frontend path
 cd "$FRONTEND_PATH" || exit
