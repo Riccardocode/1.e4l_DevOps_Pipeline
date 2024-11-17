@@ -56,8 +56,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     cp -r /vagrant_data/deploy-frontend /home/vagrant/
     cp -r /vagrant_data/deploy-backend /home/vagrant/
-    chmod -R 777 /home/vagrant/stage-frontend
-    chmod -R 777 /home/vagrant/stage-backend
+    chmod -R 777 /home/vagrant/deploy-frontend
+    chmod -R 777 /home/vagrant/deploy-backend
     # chmod 777 /home/vagrant/stage-backend/build
     # chmod 777 /home/vagrant/stage-backend/build/libs
   SHELL
