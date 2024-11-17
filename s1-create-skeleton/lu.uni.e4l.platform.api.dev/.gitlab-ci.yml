@@ -1,3 +1,6 @@
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
 image: docker:20.10.7
 
 services:
@@ -15,7 +18,7 @@ before_script:
 stages:
   - pre-build
   - build
-  # - test
+  - test
   - deploy-stage
 
 pre-build:
@@ -55,19 +58,22 @@ build:
       - build
     expire_in: 1 week
 
-# test:
-#   rules:
-#   - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-#   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#   image: gradle:8.3
-#   stage: test
-#   script: gradle clean check
-#   cache:
-#     key: "$CI_COMMIT_REF_NAME"
-#     policy: pull
-#     paths:
-#     - build
-#     - .gradle
+test:
+  rules:
+  - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image: gradle:8.3
+  tags: [e4l-backend]
+  stage: test
+  script:
+  - gradle --version  # Verify Gradle is installed
+  - gradle clean check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+    - build
+    - .gradle
 
 
 deploy-stage:
