@@ -8,9 +8,9 @@ before_script:
 - export CURRENT_DATETIME=`date +"%Y%m%d-%H%M%S"`
 - export PROPERTIES=./src/main/resources/application.properties
 
-variables:
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
+# variables:
+#   DOCKER_HOST: tcp://docker:2375
+#   DOCKER_TLS_CERTDIR: ""
 
 stages:
   - pre-build
@@ -79,7 +79,7 @@ deploy-stage:
     # Switch to root user to ensure permissions
     # - apt-get update && apt-get install -y openssh-client  # Install SSH client for scp
     # Create a temporary directory within the CI workspace
-    - cp -r build/libs/e4l-server.jar /home/vagrant/stage-backend/build/libs
-    
+    - cp -r build/libs/e4l-server.jar /home/vagrant/deploy-backend/build/libs
+    - /home/vagrant/scripts/deploy-backend.sh
   dependencies:
     - build  # Ensures artifacts from the build stage are available
