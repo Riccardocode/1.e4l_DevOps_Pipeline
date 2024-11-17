@@ -20,6 +20,22 @@ sudo dpkg -i "$PACKAGE_PATH"
 # Resolve any missing dependencies
 sudo apt-get install -f -y
 
+# Configure sudoers for passwordless execution of specific commands
+echo "Configuring passwordless sudo for GitLab Runner..."
+SUDOERS_LINE="gitlab-runner ALL=(ALL) NOPASSWD: /bin/mkdir, /bin/chmod, /usr/bin/docker"
+if ! sudo grep -qF "$SUDOERS_LINE" /etc/sudoers; then
+  echo "$SUDOERS_LINE" | sudo tee -a /etc/sudoers
+fi
+
+# Add gitlab-runner user to the docker group
+echo "Adding gitlab-runner user to the docker group..."
+sudo usermod -aG docker gitlab-runner
+
+# Restart GitLab Runner to apply group changes
+echo "Restarting GitLab Runner service..."
+sudo systemctl restart gitlab-runner
+
+
 # Retrieve the runner registration token (only if this is run on the GitLab server)
 # If not on the GitLab server, copy the token from GitLab UI: Settings > CI / CD > Runners
 # token=$(sudo gitlab-rails runner -e production "puts Gitlab::CurrentSettings.current_application_settings.runners_registration_token")
@@ -63,5 +79,12 @@ sudo gitlab-runner register \
 
 # Update the privileged setting in config.toml
 CONFIG_FILE="/etc/gitlab-runner/config.toml"
-sudo sed -i 's/privileged = false/privileged = true/' "$CONFIG_FILE"
+if sudo grep -q "privileged = false" "$CONFIG_FILE"; then
+  echo "Updating privileged setting in $CONFIG_FILE..."
+  sudo sed -i 's/privileged = false/privileged = true/' "$CONFIG_FILE"
+fi
 
+echo "Restarting GitLab Runner service..."
+sudo systemctl restart gitlab-runner
+
+echo "GitLab Runner setup completed successfully!"
