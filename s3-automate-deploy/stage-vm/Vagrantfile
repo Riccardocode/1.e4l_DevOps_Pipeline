@@ -97,5 +97,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     chmod +x /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
     /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
+
+    chmod +x /home/vagrant/scripts/deploy-database.sh
+    /home/vagrant/scripts/deploy-database.sh
+
   SHELL
 end
