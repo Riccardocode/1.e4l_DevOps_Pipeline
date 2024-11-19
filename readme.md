@@ -90,6 +90,8 @@ This command will also set the the runner to move the product into this environm
 
 When a new commit is pushed, the runner will take the new candidate to the stage environment.
 
+## Note: Readme to be reviewed from this point.
+
 ### 9. start product
 After the staging phase of the pipeline is done 
 Go Inside stage vm
