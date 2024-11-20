@@ -5,7 +5,7 @@ FRONTEND_PATH="/home/vagrant/deploy-frontend"
 
 # Define the Docker image and container name
 IMAGE_NAME="lu.uni.e4l.platform.frontend.dev:rc"
-CONTAINER_NAME="e4l-frontend-prod"
+CONTAINER_NAME="e4l-frontend-preprod"
 
 
 # Navigate to the frontend path
