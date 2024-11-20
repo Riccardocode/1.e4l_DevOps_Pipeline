@@ -1,7 +1,7 @@
 version: "3.5"
 
 services:
-  e4l-frontend-preprod:
+  e4l-frontend-prod:
     restart: always
     image: lu.uni.e4l.platform.frontend.dev:rc
     container_name: e4l-frontend-preprod
