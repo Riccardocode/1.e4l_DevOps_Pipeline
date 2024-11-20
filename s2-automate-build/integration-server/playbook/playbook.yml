@@ -42,7 +42,6 @@
       pause:
         seconds: 5
 
-    # - name: Run the gitlab runner setup script.
-    #   command: sh /home/vagrant/provision_scripts/setup-gitlab-runner.sh
-    #### End Exercise 2.c
+    - name: Run the gitlab runner setup script.
+      command: sh /home/vagrant/provision_scripts/setup-gitlab-runner.sh
 
