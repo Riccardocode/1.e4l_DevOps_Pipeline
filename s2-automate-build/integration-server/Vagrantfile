@@ -73,7 +73,12 @@ Vagrant.configure("2") do |config|
      	sudo apt-get update
      	sudo apt-get install --yes python
      	# apt-get install -y default-jre
-  	# apt-get install -y apache2
+  	  # apt-get install -y apache2
+      
+      #create  a directory
+      mkdir home/vagrant/artefact-repository
+      chmod 777 home/vagrant/artefact-repository
+
    	SHELL
    
   config.vm.provision "ansible" do |ansible|
