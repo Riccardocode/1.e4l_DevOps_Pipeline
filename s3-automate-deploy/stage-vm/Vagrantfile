@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize [
       'modifyvm', :id,
       '--natdnshostresolver1', 'on',
-      '--memory', '4096',
+      '--memory', '3074',
       '--cpus', '1'
     ]
   end
