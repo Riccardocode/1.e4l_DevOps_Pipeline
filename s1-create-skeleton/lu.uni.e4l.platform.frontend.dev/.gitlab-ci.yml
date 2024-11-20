@@ -3,6 +3,7 @@ before_script:
 stages:
   - build
   - deploy-stage
+  - deploy-production
 
 
 services:
@@ -41,7 +42,20 @@ deploy-stage:
     # Create a temporary directory within the CI workspace
     - cp -r e4l.frontend.docker/web/dist/* /home/vagrant/deploy-frontend/web/dist
     - /home/vagrant/scripts/deploy-frontend.sh
-    
+  dependencies:
+    - build  # Ensures artifacts from the build stage are available
+
+deploy-production:
+  stage: deploy-production
+  tags:
+    - production-vm-frontend-shell
+  image: ubuntu:latest
+  script:
+    # Switch to root user to ensure permissions
+    # - apt-get update && apt-get install -y openssh-client  # Install SSH client for scp
+    # Create a temporary directory within the CI workspace
+    - cp -r e4l.frontend.docker/web/dist/* /home/vagrant/deploy-frontend/web/dist
+    - /home/vagrant/scripts/deploy-frontend.sh
   dependencies:
     - build  # Ensures artifacts from the build stage are available
 

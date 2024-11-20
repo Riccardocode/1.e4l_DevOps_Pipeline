@@ -20,6 +20,7 @@ stages:
   - build
   - test
   - deploy-stage
+  - deploy-production
 
 pre-build:
   rules:
@@ -80,6 +81,21 @@ deploy-stage:
   stage: deploy-stage
   tags:
     - stage-vm-backend-shell
+  image: ubuntu:latest
+  script:
+    # Switch to root user to ensure permissions
+    # - apt-get update && apt-get install -y openssh-client  # Install SSH client for scp
+    # Create a temporary directory within the CI workspace
+    - cp -r build/libs/e4l-server.jar /home/vagrant/deploy-backend/build/libs
+    - /home/vagrant/scripts/deploy-backend.sh
+  dependencies:
+    - build  # Ensures artifacts from the build stage are available
+
+
+deploy-production:
+  stage: deploy-production
+  tags:
+    - production-vm-backend-shell
   image: ubuntu:latest
   script:
     # Switch to root user to ensure permissions
