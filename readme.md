@@ -56,14 +56,24 @@ goto http://192.168.56.2:8884/
 You should see the frontpage of the product
 
 ### 4 Congratulation! you should be set up!
-#### 4.1 
+#### 4.1 Trigger pipeline for backend
+To commit changes for the backend: 
 ```bash 
 cd ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev
+git add .
+git commit -m "Explanatory message"
+git push
 ```
-When commiting something from here will update the backend 
+Note: the pipeline is triggered when commit/s is/are pushed to the repository.
 
-#### 4.2
+#### 4.2 Trigger pipeline for frontend
+To commit changes for the frontend: 
 ```bash
 cd ~/home/riccardo~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev
+git add .
+git commit -m "Explanatory message"
+git push
 ```
-when committing here will update the frontend
+Note: the pipeline is triggered when commit/s is/are pushed to the repository.
+
+## Thank you
