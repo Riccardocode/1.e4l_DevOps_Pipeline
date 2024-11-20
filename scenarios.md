@@ -1,51 +1,68 @@
-Scenario 1: Successful CSS Update
+## Scenario 1: Successful CSS Update
 
-Goal: Update the color of navigation links to green by modifying the navbar.css file.
+### Goal: Update the color of navigation links to green by modifying the navbar.css file.
 
-Pre-conditions:
+#### Pre-conditions:
+    The project is correctly set up and builds successfully (See Readme file).
 
-    The project is correctly set up and builds successfully.
-    Access to ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev/src/css/navbar.css in the frontend source code is available.
-
-Main Success Scenario:
-
+#### 1. Locate the Navbar.css file
     Open the ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev/src/css/navbar.css file in the frontend src code.
-    Locate the CSS class definition for .custom-nav-link.
-    Modify the color property in the .custom-nav-link class from #007bff to green:
+### 2. Locate the CSS class definition for .custom-nav-link.
+```css
+.custom-nav-link {
+    color: #007bff !important; /* Default color */
+    text-decoration: none !important; /* Removes underline by default */
+}
+```
+### 3. Modify the color property in the .custom-nav-link class from #007bff to green:
+```css
+.custom-nav-link {
+    color: green !important; /* Default color */
+    text-decoration: none !important; /* Removes underline by default */
+}
+```
+### 4. Save the file and commit the changes.
+```bash
+cd ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev
+git add .
+git commit -m "changed navbar items color to green"
+git push
+```
+### 5. Verify the results
+- goto http://192.168.56.9/gitlab/ProjectOwner/e4l-frontend/-/pipelines to check if the deploy-production stage of the pipeline is successfull.
 
-    .custom-nav-link {
-        color: green !important;
-        text-decoration: none !important;
-    }
+- goto http://192.168.56.2:8884/ to check the changes of the product. 
+At this point the items of the navbar should be green.
 
-    Save the changes to navbar.css.
-    Build the project to verify the changes are applied successfully.
-    Start the application and confirm that navigation links now appear in green.
 
 Notes:
 
     Ensure you save the file before building.
     The application should build without errors, and the updated color should be visible when the app is loaded in the browser.
 
-Scenario 2: Failing Backend Change
+## Scenario 2: Failing Build for Backend 
 
-Goal: Introduce a change in the ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev/src/main/java/lu/uni/e4l/platform/controller/ContactUsController.java file that causes the backend to fail to build.
+### Goal: 
+Introduce a change in the ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev/src/main/java/lu/uni/e4l/platform/controller/ContactUsController.java file that causes the backend to fail to build.
 
-Pre-conditions:
+#### Pre-conditions:
+The project is correctly set up and builds successfully (See Readme file).
 
-    The project builds successfully before this change.
-    Access to the backend source code, specifically ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev/src/main/java/lu/uni/e4l/platform/controller/ContactUsController.java, is available.
+#### 1. Locate the ContactUsController.java file
+Open the ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev/src/main/java/lu/uni/e4l/platform/controller/ContactUsController.java file in the backend source code.
 
-Main Failure Scenario:
+#### 2. Locate and comment out the import lombok.RequiredArgsConstructor;
+Comment line 3 to remove import lombok.RequiredArgsConstructor; from the code.
+Make sure to save the file.
 
-    Open the ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev/src/main/java/lu/uni/e4l/platform/controller/ContactUsController.java file in the backend source code.
-    Locate the contactUs method within the ContactUsController class.
-    Introduce a syntax error by removing a critical line, such as omitting the contactUsService.onNewMessage(contactUs, lang, request); line.
-    Save the changes to ContactUsController.java.
-    Attempt to build the project.
-    Observe that the build fails, displaying an error due to the missing service call in contactUs.
-
-Notes:
-
-    This change intentionally disrupts the build to test error handling.
-    A failed build message should appear, indicating missing or incorrect code in the ContactUsController file.
+#### 3. Commit and push the changes to the repository
+```bash
+cd ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev
+git add .
+git commit -m "Commented out line 3: import lombok.RequiredArgsConstructor;"
+git push
+```
+#### 4. Check the pipeline
+goto http://192.168.56.9/gitlab/ProjectOwner/e4l-backend/-/pipelines and check the latest pipeline.
+the pre-build stage will pass but the build stage will fail
+You can click on build stage to get mode details about 
