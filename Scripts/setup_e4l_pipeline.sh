@@ -1,3 +1,8 @@
+#This file is used to start the pipeline and the 3 environments (Integration, Stage, Production) 
+#It will check if all the dependencies are installed in the correct version
+#If not, it will install them. In case a version is different, It will remove the present and install the correct version
+#After the installation is completed, it will start the 3 environments and set up the backend and frontend repositories
+#The environments are started with ./start_environments.sh
 #!/bin/bash
 
 # Colors for better readability
@@ -12,6 +17,8 @@ REQUIRED_VBOX_VERSION="7.0"
 REQUIRED_VAGRANT_VERSION="2.3.7"
 REQUIRED_ANSIBLE_VERSION="2.10.8"
 
+VAGRANT_LINK="https://releases.hashicorp.com/vagrant/2.3.7/vagrant_2.3.7-1_amd64.deb"
+
 # Define paths for downloads
 INSTALLATION_DIR=~/1.e4l_DevOps_Pipeline/data/installations
 GITLAB_RUNNER_FILE=$INSTALLATION_DIR/gitlab-runner_17.5.3-1_amd64.deb
@@ -23,30 +30,45 @@ DOCKER_COMPOSE_FILE=$INSTALLATION_DIR/docker-compose-linux-x86_64
 mkdir -p "$INSTALLATION_DIR"
 
 
-# Function to check and install a specific version of a tool
+## Function to check and install a specific version of a tool
 check_and_install() {
-  local tool="$1"
-  local required_version="$2"
-  local install_command="$3"
-  local version_command="$4"
+  # Parameters
+  local tool="$1"                # The name of the tool (e.g., git, vagrant)
+  local required_version="$2"    # The required version of the tool
+  local install_command="$3"     # The command to install the required version
+  local version_command="$4"     # The command to check the currently installed version
 
+  # Step 1: Notify that the script is checking for the tool
   echo "Checking $tool..."
+
+  # Step 2: Check if the tool is installed
   if command -v "$tool" &> /dev/null; then
+    # If installed, retrieve the currently installed version
     installed_version=$($version_command | grep -Eo "[0-9]+(\.[0-9]+)+" | head -1)
+
+    # Step 3: Compare the installed version with the required version
     if [[ "$installed_version" != "$required_version" ]]; then
+      # If the versions do not match, notify the user
       echo -e "${YELLOW}[Warning] $tool version mismatch. Installed: $installed_version, Required: $required_version.${NC}"
+
+      # Step 4: Remove the currently installed version
       echo "Removing old version of $tool..."
       sudo apt-get remove --purge -y "$tool"
+
+      # Step 5: Install the required version of the tool
       echo "Installing $tool version $required_version..."
       eval "$install_command"
     else
+      # If the versions match, notify the user that the correct version is installed
       echo -e "${GREEN}[OK] $tool version $required_version is installed.${NC}"
     fi
   else
+    # Step 6: If the tool is not installed, notify the user and install it
     echo -e "${RED}[Error] $tool is not installed. Installing...${NC}"
     eval "$install_command"
   fi
 }
+
 
 # Check and install Git
 check_and_install "git" "$REQUIRED_GIT_VERSION" \
@@ -60,8 +82,12 @@ check_and_install "virtualbox" "$REQUIRED_VBOX_VERSION" \
 
 # Check and install Vagrant
 check_and_install "vagrant" "$REQUIRED_VAGRANT_VERSION" \
-  "wget -q https://releases.hashicorp.com/vagrant/$REQUIRED_VAGRANT_VERSION/vagrant_${REQUIRED_VAGRANT_VERSION}_x86_64.deb && sudo dpkg -i vagrant_${REQUIRED_VAGRANT_VERSION}_x86_64.deb && sudo apt-get -f install -y" \
+  "wget https://releases.hashicorp.com/vagrant/$REQUIRED_VAGRANT_VERSION/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip -O /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip && \
+  sudo unzip -o /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip -d /usr/local/bin && \
+  sudo chmod +x /usr/local/bin/vagrant && \
+  rm -f /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip" \
   "vagrant --version"
+
 
 # Check and install Ansible
 check_and_install "ansible" "$REQUIRED_ANSIBLE_VERSION" \
@@ -103,6 +129,7 @@ else
 fi
 
 #start the 3 environments (Integration, Stage, Production)
+cd ~/1.e4l_DevOps_Pipeline/Scripts || exit
 ./start_environments.sh
 
 # Setup the backend repository

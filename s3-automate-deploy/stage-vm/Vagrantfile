@@ -50,16 +50,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Verify Installations
     docker --version
     docker-compose --version
+
+    
   SHELL
   
   # Copy and set permissions for frontend and backend
   config.vm.provision "shell", inline: <<-SHELL
     cp -r /vagrant_data/deploy-frontend /home/vagrant/
     cp -r /vagrant_data/deploy-backend /home/vagrant/
+    cp -r /vagrant_data/tests /home/vagrant/
     chmod -R 777 /home/vagrant/deploy-frontend
     chmod -R 777 /home/vagrant/deploy-backend
-    # chmod 777 /home/vagrant/stage-backend/build
-    # chmod 777 /home/vagrant/stage-backend/build/libs
+    chmod -R 777 /home/vagrant/tests
+    chmod +x /home/vagrant/tests/setup_selenium.sh
+
+    # Install Python 3 and Selenium
+    /vagrant_data/tests/setup_selenium.sh
+  
   SHELL
   
   # # Unregister GitLab Runners before halt
