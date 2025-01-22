@@ -36,7 +36,7 @@ chmod +x ./Scripts/setup_e4l_pipeline.sh
 # Execute the script
 ./Scripts/setup_e4l_pipeline.sh
 ```
-Please not that:
+Note:
 If a windows VM Virtual Box opens, Please close it using the x button
 System may request you to insert the sudo password of the system
 
