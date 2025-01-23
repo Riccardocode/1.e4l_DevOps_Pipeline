@@ -69,32 +69,34 @@ check_and_install() {
   fi
 }
 
+#Installing those programs can overcomplicate the process
+#So the installation of them will be left to the user manually.
+# # Check and install Git
+# check_and_install "git" "$REQUIRED_GIT_VERSION" \
+#   "sudo apt-get update && sudo apt-get install -y git=$REQUIRED_GIT_VERSION*" \
+#   "git --version"
 
-# Check and install Git
-check_and_install "git" "$REQUIRED_GIT_VERSION" \
-  "sudo apt-get update && sudo apt-get install -y git=$REQUIRED_GIT_VERSION*" \
-  "git --version"
+# # Check and install VirtualBox
+# check_and_install "virtualbox" "$REQUIRED_VBOX_VERSION" \
+#   "wget -q https://download.virtualbox.org/virtualbox/$REQUIRED_VBOX_VERSION/virtualbox-$REQUIRED_VBOX_VERSION_amd64.deb && sudo dpkg -i virtualbox-$REQUIRED_VBOX_VERSION_amd64.deb && sudo apt-get -f install -y" \
+#   "virtualbox --version"
 
-# Check and install VirtualBox
-check_and_install "virtualbox" "$REQUIRED_VBOX_VERSION" \
-  "wget -q https://download.virtualbox.org/virtualbox/$REQUIRED_VBOX_VERSION/virtualbox-$REQUIRED_VBOX_VERSION_amd64.deb && sudo dpkg -i virtualbox-$REQUIRED_VBOX_VERSION_amd64.deb && sudo apt-get -f install -y" \
-  "virtualbox --version"
-
-# Check and install Vagrant
-check_and_install "vagrant" "$REQUIRED_VAGRANT_VERSION" \
-  "wget https://releases.hashicorp.com/vagrant/$REQUIRED_VAGRANT_VERSION/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip -O /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip && \
-  sudo unzip -o /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip -d /usr/local/bin && \
-  sudo chmod +x /usr/local/bin/vagrant && \
-  rm -f /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip" \
-  "vagrant --version"
-
-
-# Check and install Ansible
-check_and_install "ansible" "$REQUIRED_ANSIBLE_VERSION" \
-  "sudo apt-get update && sudo apt-get install -y ansible=$REQUIRED_ANSIBLE_VERSION*" \
-  "ansible --version"
+# # Check and install Vagrant
+# check_and_install "vagrant" "$REQUIRED_VAGRANT_VERSION" \
+#   "wget https://releases.hashicorp.com/vagrant/$REQUIRED_VAGRANT_VERSION/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip -O /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip && \
+#   sudo unzip -o /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip -d /usr/local/bin && \
+#   sudo chmod +x /usr/local/bin/vagrant && \
+#   rm -f /tmp/vagrant_${REQUIRED_VAGRANT_VERSION}_linux_amd64.zip" \
+#   "vagrant --version"
 
 
+# # Check and install Ansible
+# check_and_install "ansible" "$REQUIRED_ANSIBLE_VERSION" \
+#   "sudo apt-get update && sudo apt-get install -y ansible=$REQUIRED_ANSIBLE_VERSION*" \
+#   "ansible --version"
+
+#Those downloads help to reduce time when installing the envonments.
+#By reusing the same installation file and avoiding to download it again
 # Download GitLab Runner
 if [ ! -f "$GITLAB_RUNNER_FILE" ]; then
   echo "Downloading GitLab Runner..."

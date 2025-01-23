@@ -9,9 +9,8 @@ This project uses the following software versions
 - git version 2.34.1
 - ansible 2.10.8
 - Virtual box v:7.0 installed 
-- Vagrant 2.3.7
-Those versions will be installed during the setup project
-NOTE: Different versions of this software will be removed.
+- Vagrant 2.4.3
+
 
 
 ## Pipeline
