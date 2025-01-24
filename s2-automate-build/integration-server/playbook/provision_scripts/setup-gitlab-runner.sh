@@ -22,6 +22,12 @@ sudo dpkg -i "$PACKAGE_PATH"
 # Resolve any missing dependencies
 sudo apt-get install -f -y
 
+# Add the GitLab Runner packages
+curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+sudo apt-get update
+sudo apt-get install -y gitlab-runner-helper-images
+
+
 # Retrieve the runner registration token (only if this is run on the GitLab server)
 # If not on the GitLab server, copy the token from GitLab UI: Settings > CI / CD > Runners
 token=$(sudo gitlab-rails runner -e production "puts Gitlab::CurrentSettings.current_application_settings.runners_registration_token")
