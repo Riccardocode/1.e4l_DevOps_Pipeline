@@ -29,7 +29,7 @@ else
 fi
 
 # Initialize a local Git repository
-cd /home/riccardo/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev
+cd ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev
 git init
 
 # Check if the origin remote already exists and remove it if it does
