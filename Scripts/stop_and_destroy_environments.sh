@@ -26,7 +26,7 @@ destroy_vm() {
 
 # Stop all VMs first
 echo "Stopping all environments..."
-./stop_all_vms.sh || {
+./stop_environments.sh || {
   echo -e "${RED}[Error] Failed to stop environments. Aborting destroy operation.${NC}"
   exit 1
 }
