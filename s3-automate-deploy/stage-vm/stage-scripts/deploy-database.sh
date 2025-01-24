@@ -18,17 +18,17 @@ else
 fi
 
 # Create the e4l-mysql directory if it doesn't exist and set permissions
-if [ ! -d "${HOME}/e4l-mysql" ]; then
-    echo "Creating ${HOME}/e4l-mysql directory..."
-    mkdir -p "${HOME}/e4l-mysql"
+if [ ! -d "/home/vagrant/e4l-mysql" ]; then
+    echo "Creating /home/vagrant/e4l-mysql directory..."
+    mkdir -p "/home/vagrant/e4l-mysql"
     
 fi
-chmod -R 777 "${HOME}/e4l-mysql"
+chmod -R 777 "/home/vagrant/e4l-mysql"
 
 # Create the e4l-news directory if it doesn't exist and set permissions
 if [ ! -d "/home/vagrant/e4l-news" ]; then
-    echo "Creating ${HOME}/e4l-news directory..."
-    mkdir -p "${HOME}/e4l-news"
+    echo "Creating /home/vagrant/e4l-news directory..."
+    mkdir -p "/home/vagrant/e4l-news"
 fi
 chmod -R 777 "/home/vagrant/e4l-news"
 
