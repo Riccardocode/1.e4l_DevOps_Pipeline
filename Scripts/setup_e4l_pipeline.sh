@@ -135,7 +135,7 @@ cd ~/1.e4l_DevOps_Pipeline/Scripts || exit
 ./start_environments.sh
 
 # Setup the backend repository
-BACKEND_REPO="/home/riccardo/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev"
+BACKEND_REPO="~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.api.dev"
 echo "Setting up the backend repository..."
 if [ -d "$BACKEND_REPO" ]; then
   echo -e "${GREEN}[OK] Backend repository is already set up at $BACKEND_REPO.${NC}"
@@ -145,7 +145,7 @@ else
 fi
 
 # Setup the frontend repository
-FRONTEND_REPO="/home/riccardo/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev"
+FRONTEND_REPO="~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev"
 echo "Setting up the frontend repository..."
 if [ -d "$FRONTEND_REPO" ]; then
   echo -e "${GREEN}[OK] Frontend repository is already set up at $FRONTEND_REPO.${NC}"
