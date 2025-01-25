@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$BACKEND_PATH="/home/vagrant/deploy-backend"
+BACKEND_PATH="/home/vagrant/deploy-backend"
 
 # Check if the specified MariaDB image exists locally
 if docker images | grep -q "mariadb.*10.4.7"; then
