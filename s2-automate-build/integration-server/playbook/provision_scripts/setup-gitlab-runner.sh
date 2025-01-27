@@ -8,8 +8,8 @@ PACKAGE_NAME="gitlab-runner_17.5.3-1_amd64.deb"
 PACKAGE_PATH="$INSTALLATION_DIR/$PACKAGE_NAME"
 
 # # Previous Install GitLab Runner from internet
-# curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
-# sudo apt-get install -y gitlab-runner
+curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+sudo apt-get install -y gitlab-runner
 
 # Check if the package exists in the shared folder
 if [ ! -f "$PACKAGE_PATH" ]; then
