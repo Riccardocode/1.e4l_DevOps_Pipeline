@@ -63,7 +63,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chmod +x /home/vagrant/tests/setup_selenium.sh
 
     # Install Python 3 and Selenium
-    /vagrant_data/tests/setup_selenium.sh
+    # /vagrant_data/tests/setup_selenium.sh
   
   SHELL
   
