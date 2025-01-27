@@ -50,8 +50,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Verify Installations
     docker --version
     docker-compose --version
-
-    
   SHELL
   
   # Copy and set permissions for frontend and backend
@@ -103,10 +101,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Run the GitLab Runner setup script
   config.vm.provision "shell", inline: <<-SHELL
     chmod +x /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
-    /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
-
+    sudo /home/vagrant/scripts/setup-gitlab-runner-stage-vm.sh
+  # Run the deploy-database script
     chmod +x /home/vagrant/scripts/deploy-database.sh
-    /home/vagrant/scripts/deploy-database.sh
+    sudo /home/vagrant/scripts/deploy-database.sh
+  # Run the deploy-frontend script
+    sudo chmod +x /home/vagrant/scripts/deploy-frontend.sh
+    sudo /home/vagrant/scripts/deploy-frontend.sh
+  # Run the deploy-backend script
+    sudo chmod +x /home/vagrant/scripts/deploy-backend.sh
+    sudo /home/vagrant/scripts/deploy-backend.sh
 
   SHELL
 end
