@@ -72,7 +72,7 @@ Note: the pipeline is triggered when commit/s is/are pushed to the repository.
 #### 4.2 Trigger pipeline for frontend
 To commit changes for the frontend: 
 ```bash
-cd ~/home/riccardo~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev
+cd ~/1.e4l_DevOps_Pipeline/s1-create-skeleton/lu.uni.e4l.platform.frontend.dev
 git add .
 git commit -m "Explanatory message"
 git push
