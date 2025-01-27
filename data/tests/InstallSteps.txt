@@ -1,0 +1,20 @@
+sudo apt update
+sudo apt install python3-pip -y
+
+pip3 install selenium==3.141.0
+
+sudo apt install -y chromium-browser
+
+wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+
+sudo apt install unzip
+
+unzip chromedriver_linux64.zip
+sudo mv chromedriver /usr/local/bin/
+sudo chmod +x /usr/local/bin/chromedriver
+
+chromedriver --version
+
+pip3 install urllib3==1.26.6
+
+python3 ./selenium_test.py 
