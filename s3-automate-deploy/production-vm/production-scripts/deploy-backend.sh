@@ -38,9 +38,9 @@ docker run -d --name "${CONTAINER_NAME}" "$IMAGE_NAME" || {
     echo "Error: Failed to start the container."
     exit 1
 }
-docker start -d --name "${CONTAINER_NAME}" "$IMAGE_NAME" || {
-    echo "Error: Failed to start the container."
-    exit 1
-}
+# docker start -d --name "${CONTAINER_NAME}" "$IMAGE_NAME" || {
+#     echo "Error: Failed to start the container."
+#     exit 1
+# }
 
 echo "Script executed successfully!"
