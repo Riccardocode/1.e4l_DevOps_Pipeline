@@ -9,16 +9,16 @@ PACKAGE_PATH="$INSTALLATION_DIR/$PACKAGE_NAME"
 curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
 sudo apt-get install -y gitlab-runner
 
-# Check if the package exists in the shared folder
-if [ ! -f "$PACKAGE_PATH" ]; then
-  echo "Error: GitLab Runner package not found at $PACKAGE_PATH."
-  exit 1
-fi
+# # Check if the package exists in the shared folder
+# if [ ! -f "$PACKAGE_PATH" ]; then
+#   echo "Error: GitLab Runner package not found at $PACKAGE_PATH."
+#   exit 1
+# fi
 
-# Install GitLab Runner from the pre-downloaded package
-sudo dpkg -i "$PACKAGE_PATH"
-# Resolve any missing dependencies
-sudo apt-get install -f -y
+# # Install GitLab Runner from the pre-downloaded package
+# sudo dpkg -i "$PACKAGE_PATH"
+# # Resolve any missing dependencies
+# sudo apt-get install -f -y
 
 # Configure sudoers for passwordless execution of specific commands
 echo "Configuring passwordless sudo for GitLab Runner..."
