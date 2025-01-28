@@ -25,6 +25,8 @@ GITLAB_RUNNER_FILE=$INSTALLATION_DIR/gitlab-runner_17.5.3-1_amd64.deb
 DOCKER_CLI_FILE=$INSTALLATION_DIR/docker-ce-cli_19.03.15~3-0~ubuntu-xenial_amd64.deb
 CONTAINERD_FILE=$INSTALLATION_DIR/containerd.io_1.3.7-1_amd64.deb
 DOCKER_COMPOSE_FILE=$INSTALLATION_DIR/docker-compose-linux-x86_64
+DOCKER_CE_PACKAGE="docker-ce_19.03.15~3-0~ubuntu-xenial_amd64.deb"
+DOCKER_COMPOSE_BINARY="docker-compose-1.23.2"
 
 # Ensure the installation directory exists
 mkdir -p "$INSTALLATION_DIR"
@@ -111,6 +113,32 @@ if [ ! -f "$DOCKER_CLI_FILE" ]; then
   wget -q https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/docker-ce-cli_19.03.15~3-0~ubuntu-xenial_amd64.deb -P "$INSTALLATION_DIR"
 else
   echo -e "${GREEN}[OK] Docker CLI is already downloaded.${NC}"
+fi
+
+# Download Docker CE if not already available
+if [ ! -f "$INSTALLATION_DIR/$DOCKER_CE_PACKAGE" ]; then
+  echo "Downloading Docker CE..."
+  wget -O "$INSTALLATION_DIR/$DOCKER_CE_PACKAGE" \
+    "https://download.docker.com/linux/ubuntu/dists/xenial/pool/stable/amd64/$DOCKER_CE_PACKAGE"
+  if [ $? -ne 0 ]; then
+    echo "Error: Failed to download Docker CE. Exiting."
+    exit 1
+  fi
+else
+  echo "Docker CE package already exists at $INSTALLATION_DIR/$DOCKER_CE_PACKAGE."
+fi
+
+# Download Docker Compose if not already available
+if [ ! -f "$INSTALLATION_DIR/$DOCKER_COMPOSE_BINARY" ]; then
+  echo "Downloading Docker Compose..."
+  wget -O "$INSTALLATION_DIR/$DOCKER_COMPOSE_BINARY" \
+    "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)"
+  if [ $? -ne 0 ]; then
+    echo "Error: Failed to download Docker Compose. Exiting."
+    exit 1
+  fi
+else
+  echo "Docker Compose binary already exists at $INSTALLATION_DIR/$DOCKER_COMPOSE_BINARY."
 fi
 
 # Download containerd.io
